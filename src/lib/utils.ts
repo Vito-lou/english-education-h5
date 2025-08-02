@@ -1,0 +1,165 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+// API 响应类型
+export interface ApiResponse<T = unknown> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
+export interface PaginatedResponse<T = unknown> {
+  data: T[];
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
+// 用户类型
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  system_access: {
+    offline: boolean;
+    online: boolean;
+  };
+}
+
+// 登录响应类型
+export interface LoginResponse {
+  user: User;
+  token: string;
+}
+
+// 学生类型
+export interface Student {
+  id: number;
+  name: string;
+  student_id: string;
+  current_level: string;
+}
+
+// 课程类型
+export interface Course {
+  id: number;
+  level: string;
+  name: string;
+  description: string;
+  total_stories?: number;
+  target_words?: number;
+  duration?: string;
+}
+
+// 故事类型
+export interface Story {
+  id: number;
+  title: string;
+  description: string;
+  level: string;
+}
+
+// 学习进度类型
+export interface StudentProgress {
+  current_level: string;
+  completed_stories: number;
+  total_stories: number;
+  current_story: string;
+}
+
+// 课时信息类型
+export interface ClassHours {
+  remaining_hours: number;
+  total_hours: number;
+  used_hours: number;
+}
+
+// 格式化日期
+export function formatDate(date: string | Date) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date(date));
+}
+
+// 格式化时间
+export function formatDateTime(date: string | Date) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(date));
+}
+
+// 格式化课时
+export function formatClassHours(hours: number): string {
+  if (hours <= 0) return "0课时";
+  if (hours < 1) return `${Math.round(hours * 60)}分钟`;
+  return `${hours}课时`;
+}
+
+// 获取级别颜色
+export function getLevelColor(level: string): string {
+  const colors: Record<string, string> = {
+    "Pre-A": "bg-purple-500",
+    A: "bg-blue-500",
+    B: "bg-green-500",
+    C: "bg-yellow-500",
+    D: "bg-red-500",
+  };
+  return colors[level] || "bg-gray-500";
+}
+
+// 获取级别文本颜色
+export function getLevelTextColor(level: string): string {
+  const colors: Record<string, string> = {
+    "Pre-A": "text-purple-600",
+    A: "text-blue-600",
+    B: "text-green-600",
+    C: "text-yellow-600",
+    D: "text-red-600",
+  };
+  return colors[level] || "text-gray-600";
+}
+
+// 获取级别背景颜色
+export function getLevelBgColor(level: string): string {
+  const colors: Record<string, string> = {
+    "Pre-A": "bg-purple-50",
+    A: "bg-blue-50",
+    B: "bg-green-50",
+    C: "bg-yellow-50",
+    D: "bg-red-50",
+  };
+  return colors[level] || "bg-gray-50";
+}
+
+// 计算学习进度百分比
+export function calculateProgress(completed: number, total: number): number {
+  if (total <= 0) return 0;
+  return Math.round((completed / total) * 100);
+}
+
+// 检测是否在微信浏览器中
+export function isWeChatBrowser(): boolean {
+  if (typeof window === "undefined") return false;
+  const ua = window.navigator.userAgent.toLowerCase();
+  return ua.includes("micromessenger");
+}
+
+// 检测是否在移动设备上
+export function isMobileDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    window.navigator.userAgent
+  );
+}
