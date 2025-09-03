@@ -80,6 +80,46 @@ export interface ClassHours {
   used_hours: number;
 }
 
+// 课时记录类型
+export interface AttendanceRecord {
+  id: number;
+  record_type: "scheduled" | "manual";
+  schedule_date: string;
+  time_range: string;
+  course_name: string;
+  teacher_name: string;
+  student_name: string;
+  attendance_status: string;
+  status_name: string;
+  deducted_lessons: number;
+  teacher_notes: string;
+  recorded_at: string;
+}
+
+// 学生课时统计类型
+export interface StudentClassHoursSummary {
+  id: number;
+  name: string;
+  total_lessons: number;
+  used_lessons: number;
+  remaining_lessons: number;
+}
+
+// 分页信息类型
+export interface PaginationInfo {
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+  has_more: boolean;
+}
+
+// 分页响应类型
+export interface PaginatedResponse<T> {
+  data: T[];
+  pagination: PaginationInfo;
+}
+
 // 格式化日期
 export function formatDate(date: string | Date) {
   return new Intl.DateTimeFormat("zh-CN", {

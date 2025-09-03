@@ -8,6 +8,9 @@ import type {
   StudentProgress,
   ClassHours,
   LoginResponse,
+  AttendanceRecord,
+  StudentClassHoursSummary,
+  PaginatedResponse,
 } from "./utils";
 
 const api = axios.create({
@@ -83,13 +86,31 @@ api.interceptors.response.use(
 export const studentApi = {
   searchByName: (name: string) =>
     api.get<ApiResponse<Student[]>>(
-      `/students/search?name=${encodeURIComponent(name)}`
+      `/h5/students/search?name=${encodeURIComponent(name)}`
     ),
-  getDetail: (id: number) => api.get<ApiResponse<Student>>(`/students/${id}`),
+  getDetail: (id: number) =>
+    api.get<ApiResponse<Student>>(`/h5/students/${id}`),
   getClassHours: (id: number) =>
-    api.get<ApiResponse<ClassHours>>(`/students/${id}/class-hours`),
+    api.get<ApiResponse<ClassHours>>(`/h5/students/${id}/class-hours`),
   getProgress: (id: number) =>
-    api.get<ApiResponse<StudentProgress>>(`/students/${id}/progress`),
+    api.get<ApiResponse<StudentProgress>>(`/h5/students/${id}/progress`),
+  getAttendanceRecords: (
+    id: number,
+    params?: {
+      date_from?: string;
+      date_to?: string;
+      page?: number;
+      per_page?: number;
+    }
+  ) =>
+    api.get<ApiResponse<AttendanceRecord[]> & { pagination: PaginationInfo }>(
+      `/h5/students/${id}/attendance-records`,
+      { params }
+    ),
+  getClassHoursSummary: (id: number) =>
+    api.get<ApiResponse<StudentClassHoursSummary>>(
+      `/h5/students/${id}/class-hours-summary`
+    ),
 };
 
 // 课程相关API

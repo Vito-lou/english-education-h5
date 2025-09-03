@@ -30,7 +30,7 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* 头部 */}
-      <motion.header 
+      <motion.header
         className="bg-white/80 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-50"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -54,8 +54,8 @@ export default function DashboardPage() {
             </div>
 
             {/* 退出按钮 */}
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               onClick={handleLogout}
             >
@@ -119,8 +119,8 @@ export default function DashboardPage() {
               },
               {
                 icon: Clock,
-                title: "学习记录",
-                description: "查看详细的学习历史和进度报告",
+                title: "课时记录",
+                description: "查看上课记录、课时余额和消费明细",
                 color: "from-purple-500 to-purple-600",
                 href: "/records"
               }
