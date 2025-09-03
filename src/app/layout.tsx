@@ -11,6 +11,13 @@ export const metadata: Metadata = {
   keywords: ['英语教育', '家长端', '课程查询', '学习进度'],
   authors: [{ name: '英语教育团队' }],
 
+  // Favicon 设置
+  icons: {
+    icon: '/logo.jpeg',
+    shortcut: '/logo.jpeg',
+    apple: '/logo.jpeg',
+  },
+
   // PWA相关
   manifest: '/manifest.json',
 
@@ -25,6 +32,7 @@ export const metadata: Metadata = {
     description: '查看孩子的英语学习进度',
     type: 'website',
     locale: 'zh_CN',
+    images: ['/logo.jpeg'],
   },
 
   // 微信分享优化
