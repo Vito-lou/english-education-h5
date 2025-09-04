@@ -134,6 +134,60 @@ export const studentApi = {
   getMyStudents: () => api.get<ApiResponse<Student[]>>("/h5/my-students"),
 };
 
+// 作业相关API
+export const homeworkApi = {
+  getStudentHomework: (
+    studentId: number,
+    params?: {
+      status?: "pending" | "submitted" | "overdue" | "all";
+      page?: number;
+      per_page?: number;
+    }
+  ) =>
+    api.get<ApiResponse<HomeworkAssignment[]> & { pagination: PaginationInfo }>(
+      `/h5/students/${studentId}/homework`,
+      { params }
+    ),
+  getHomeworkDetail: (
+    homeworkId: number,
+    params?: {
+      student_id?: number;
+    }
+  ) =>
+    api.get<ApiResponse<HomeworkAssignment>>(`/h5/homework/${homeworkId}`, {
+      params,
+    }),
+  submitHomework: (
+    homeworkId: number,
+    data: {
+      student_id: number;
+      content?: string;
+      attachments?: File[];
+    }
+  ) => {
+    const formData = new FormData();
+    formData.append("student_id", data.student_id.toString());
+    if (data.content) {
+      formData.append("content", data.content);
+    }
+    if (data.attachments) {
+      data.attachments.forEach((file, index) => {
+        formData.append(`attachments[${index}]`, file);
+      });
+    }
+
+    return api.post<ApiResponse<HomeworkSubmission>>(
+      `/h5/homework/${homeworkId}/submit`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+  },
+};
+
 // 课程相关API
 export const courseApi = {
   getLevels: () => api.get<ApiResponse<Course[]>>("/courses/levels"),

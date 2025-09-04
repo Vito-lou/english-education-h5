@@ -169,52 +169,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 课程级别展示 */}
-      <section className="px-4 py-16 bg-white/50">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            完整的课程体系
-          </h2>
-          <p className="text-gray-600 text-lg">
-            从启蒙到高级，陪伴孩子每一步成长
-          </p>
-        </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          {[
-            { level: 'Pre-A', name: '预备级', color: 'bg-purple-500' },
-            { level: 'A', name: 'A级', color: 'bg-blue-500' },
-            { level: 'B', name: 'B级', color: 'bg-green-500' },
-            { level: 'C', name: 'C级', color: 'bg-yellow-500' },
-            { level: 'D', name: 'D级', color: 'bg-red-500' },
-          ].map((course, index) => (
-            <motion.div
-              key={course.level}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
-            >
-              <Card clickable className="text-center">
-                <CardContent>
-                  <div className={`w-16 h-16 ${course.color} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                    <span className="text-white font-bold text-xl">
-                      {course.level}
-                    </span>
-                  </div>
-                  <h3 className="font-semibold text-gray-900">
-                    {course.name}
-                  </h3>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="px-4 py-16">

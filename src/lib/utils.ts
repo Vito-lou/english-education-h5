@@ -20,6 +20,13 @@ export interface PaginatedResponse<T = unknown> {
   total: number;
 }
 
+export interface PaginationInfo {
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
 // 用户类型
 export interface User {
   id: number;
@@ -259,4 +266,56 @@ export function isMobileDevice(): boolean {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     window.navigator.userAgent
   );
+}
+
+// 作业相关类型
+export interface HomeworkAssignment {
+  id: number;
+  title: string;
+  requirements: string;
+  due_date: string;
+  due_date_formatted: string;
+  status: "active" | "expired" | "draft";
+  is_expired: boolean;
+  attachments: HomeworkAttachment[];
+  class: {
+    id: number;
+    name: string;
+  };
+  creator: {
+    id: number;
+    name: string;
+  };
+  unit?: {
+    id: number;
+    name: string;
+  };
+  knowledge_points?: KnowledgePoint[];
+  submission?: HomeworkSubmission;
+  created_at: string;
+}
+
+export interface HomeworkSubmission {
+  id: number;
+  content?: string;
+  attachments: HomeworkAttachment[];
+  status: "submitted" | "late" | "graded";
+  submitted_at?: string;
+  score?: number;
+  max_score?: number;
+  teacher_feedback?: string;
+  graded_at?: string;
+}
+
+export interface HomeworkAttachment {
+  name: string;
+  url: string;
+  size: number;
+  type: string;
+}
+
+export interface KnowledgePoint {
+  id: number;
+  name: string;
+  description?: string;
 }

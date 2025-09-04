@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-import { LogOut, Search, BookOpen, Clock, User, Calendar } from 'lucide-react'
+import { LogOut, Search, FileText, Clock, User, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader } from '@/components/ui/Card'
 import { useAuthStore } from '@/stores/auth'
@@ -111,11 +111,11 @@ export default function DashboardPage() {
                 href: "/search"
               },
               {
-                icon: BookOpen,
-                title: "课程体系",
-                description: "了解完整的课程设置和学习内容",
+                icon: FileText,
+                title: "课后作业",
+                description: "查看老师布置的作业和提交情况",
                 color: "from-green-500 to-green-600",
-                href: "/courses"
+                href: "/homework"
               },
               {
                 icon: Clock,
@@ -173,20 +173,20 @@ export default function DashboardPage() {
             <Card>
               <CardContent className="text-center">
                 <div className="text-2xl font-bold text-blue-600 mb-2">
-                  5
+                  0
                 </div>
                 <p className="text-sm text-gray-600">
-                  课程级别
+                  待完成作业
                 </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="text-center">
                 <div className="text-2xl font-bold text-green-600 mb-2">
-                  60+
+                  0
                 </div>
                 <p className="text-sm text-gray-600">
-                  精彩故事
+                  已提交作业
                 </p>
               </CardContent>
             </Card>
