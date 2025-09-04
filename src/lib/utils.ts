@@ -105,6 +105,63 @@ export interface StudentClassHoursSummary {
   remaining_lessons: number;
 }
 
+// 课程表相关类型
+export interface TimeSlot {
+  id: number;
+  name: string;
+  start_time: string;
+  end_time: string;
+  time_range: string;
+}
+
+export interface ClassInfo {
+  id: number;
+  name: string;
+}
+
+export interface CourseInfo {
+  id: number;
+  name: string;
+}
+
+export interface TeacherInfo {
+  id: number;
+  name: string;
+}
+
+export interface LessonInfo {
+  unit_name: string;
+  lesson_name: string;
+}
+
+export interface Schedule {
+  id: number;
+  date: string;
+  formatted_date: string;
+  weekday: number;
+  weekday_name: string;
+  time_slot: TimeSlot;
+  class: ClassInfo;
+  course: CourseInfo;
+  teacher: TeacherInfo;
+  lesson_content: string;
+  teaching_focus: string;
+  classroom: string;
+  status: string;
+  status_name: string;
+  lesson_info: LessonInfo | null;
+}
+
+export interface StudentSchedule {
+  student_name: string;
+  schedules: Schedule[];
+  upcoming_classes: Schedule[];
+  date_range: {
+    from: string;
+    to: string;
+  };
+}
+
 // 分页信息类型
 export interface PaginationInfo {
   current_page: number;

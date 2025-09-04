@@ -11,6 +11,7 @@ import type {
   AttendanceRecord,
   StudentClassHoursSummary,
   PaginatedResponse,
+  StudentSchedule,
 } from "./utils";
 
 const api = axios.create({
@@ -120,6 +121,17 @@ export const studentApi = {
     api.get<ApiResponse<StudentClassHoursSummary>>(
       `/h5/students/${id}/class-hours-summary`
     ),
+  getSchedule: (
+    id: number,
+    params?: {
+      date_from?: string;
+      date_to?: string;
+    }
+  ) =>
+    api.get<ApiResponse<StudentSchedule>>(`/h5/students/${id}/schedule`, {
+      params,
+    }),
+  getMyStudents: () => api.get<ApiResponse<Student[]>>("/h5/my-students"),
 };
 
 // 课程相关API

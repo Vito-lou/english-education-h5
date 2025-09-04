@@ -7,16 +7,14 @@ import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader } from '@/components/ui/Card'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { useAuthStore } from '@/stores/auth'
+import { useStudentStore } from '@/stores/student'
 import { useRecords } from '@/stores/records'
 import { useEffect, useState } from 'react'
 import { formatDate, formatDateTime } from '@/lib/utils'
 
-// 临时学生ID - 实际应用中应该从路由参数或用户状态获取
-// 修改为刘熙予的正确ID
-const TEMP_STUDENT_ID = 12
-
 export default function RecordsPage() {
   const { user, isAuthenticated } = useAuthStore()
+  const { currentStudent, fetchMyStudents } = useStudentStore()
   const router = useRouter()
   const {
     loading,
@@ -35,9 +33,10 @@ export default function RecordsPage() {
 
   // 下拉刷新处理
   const handleRefresh = async () => {
+    if (!currentStudent) return
     setRefreshing(true)
     reset() // 重置状态
-    await fetchClassHoursSummary(TEMP_STUDENT_ID)
+    await fetchClassHoursSummary(currentStudent.id)
     setRefreshing(false)
   }
 
@@ -49,10 +48,17 @@ export default function RecordsPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      // 获取课时统计数据
-      fetchClassHoursSummary(TEMP_STUDENT_ID)
+      // 首先获取学生信息
+      fetchMyStudents()
     }
-  }, [isAuthenticated]) // 移除 fetchClassHoursSummary 依赖
+  }, [isAuthenticated, fetchMyStudents])
+
+  useEffect(() => {
+    if (currentStudent) {
+      // 获取课时统计数据
+      fetchClassHoursSummary(currentStudent.id)
+    }
+  }, [currentStudent, fetchClassHoursSummary])
 
   if (!isAuthenticated || !user) {
     return null
@@ -76,7 +82,7 @@ export default function RecordsPage() {
             <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">加载失败</h3>
             <p className="text-gray-600 mb-4">{error}</p>
-            <Button onClick={() => fetchClassHoursSummary(TEMP_STUDENT_ID)}>
+            <Button onClick={() => currentStudent && fetchClassHoursSummary(currentStudent.id)}>
               重试
             </Button>
           </CardContent>
@@ -280,7 +286,7 @@ export default function RecordsPage() {
             {hasMore ? (
               <Button
                 variant="secondary"
-                onClick={() => loadMoreRecords(TEMP_STUDENT_ID)}
+                onClick={() => currentStudent && loadMoreRecords(currentStudent.id)}
                 disabled={loading}
               >
                 {loading ? '加载中...' : '加载更多记录'}

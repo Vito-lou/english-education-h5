@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-import { LogOut, Search, BookOpen, Clock, User } from 'lucide-react'
+import { LogOut, Search, BookOpen, Clock, User, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader } from '@/components/ui/Card'
 import { useAuthStore } from '@/stores/auth'
@@ -123,6 +123,13 @@ export default function DashboardPage() {
                 description: "查看上课记录、课时余额和消费明细",
                 color: "from-purple-500 to-purple-600",
                 href: "/records"
+              },
+              {
+                icon: Calendar,
+                title: "课程表",
+                description: "查看课程安排和上课时间表",
+                color: "from-orange-500 to-orange-600",
+                href: "/schedule"
               }
             ].map((item, index) => (
               <motion.div
