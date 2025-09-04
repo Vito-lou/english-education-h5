@@ -56,25 +56,34 @@ api.interceptors.response.use(
       error.message = "网络连接失败，请检查网络设置";
     } else {
       // HTTP错误处理
-      const { status } = error.response;
+      const { status, data } = error.response;
+
+      // 优先使用后端返回的错误信息
+      const backendMessage = data?.message;
+
       switch (status) {
         case 401:
-          error.message = "请重新登录";
-          if (typeof window !== "undefined") {
-            localStorage.removeItem("h5_token");
+          // 如果是登录接口，使用后端返回的具体错误信息
+          if (error.config?.url?.includes("/auth/login")) {
+            error.message = backendMessage || "登录失败";
+          } else {
+            error.message = "请重新登录";
+            if (typeof window !== "undefined") {
+              localStorage.removeItem("h5_token");
+            }
           }
           break;
         case 403:
-          error.message = "没有访问权限";
+          error.message = backendMessage || "没有访问权限";
           break;
         case 404:
-          error.message = "请求的资源不存在";
+          error.message = backendMessage || "请求的资源不存在";
           break;
         case 500:
-          error.message = "服务器内部错误";
+          error.message = backendMessage || "服务器内部错误";
           break;
         default:
-          error.message = error.response.data?.message || "请求失败";
+          error.message = backendMessage || "请求失败";
       }
     }
 

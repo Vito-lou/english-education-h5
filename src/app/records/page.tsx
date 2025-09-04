@@ -12,7 +12,8 @@ import { useEffect, useState } from 'react'
 import { formatDate, formatDateTime } from '@/lib/utils'
 
 // 临时学生ID - 实际应用中应该从路由参数或用户状态获取
-const TEMP_STUDENT_ID = 8
+// 修改为刘熙予的正确ID
+const TEMP_STUDENT_ID = 12
 
 export default function RecordsPage() {
   const { user, isAuthenticated } = useAuthStore()

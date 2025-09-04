@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { Mail, Lock, ArrowLeft } from 'lucide-react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Card, CardContent, CardHeader } from '@/components/ui/Card'
@@ -76,9 +77,15 @@ export default function LoginPage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4"
+                className="w-16 h-16 rounded-2xl overflow-hidden mx-auto mb-4"
               >
-                <span className="text-white font-bold text-xl">英</span>
+                <Image
+                  src="/logo.jpeg"
+                  alt="星云英语Logo"
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
               <motion.h1
                 className="text-2xl font-bold text-gray-900"
